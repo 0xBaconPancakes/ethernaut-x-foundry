@@ -28,13 +28,13 @@ contract FalloutTest is DSTest {
         ethernaut.registerLevel(falloutFactory);
         vm.startPrank(eoaAddress);
         address levelAddress = ethernaut.createLevelInstance(falloutFactory);
-        Fallout ethernautFallout = Fallout(payable(levelAddress));
+        Fallout fallout = Fallout(payable(levelAddress));
 
         //////////////////
         // LEVEL ATTACK //
         //////////////////
 
-        ethernautFallout.Fal1out{value: 1 wei}();
+        fallout.Fal1out{value: 1 wei}();
 
         //////////////////////
         // LEVEL SUBMISSION //

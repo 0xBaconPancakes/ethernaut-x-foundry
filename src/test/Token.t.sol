@@ -3,12 +3,13 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../CoinFlip/CoinFlipHack.sol";
-import "../CoinFlip/CoinFlipFactory.sol";
+import "../Token/Token.sol";
+import "../Token/TokenHack.sol";
+import "../Token/TokenFactory.sol";
 import "../Ethernaut.sol";
 import "./utils/vm.sol";
 
-contract CoinFlipTest is DSTest {
+contract TokenTest is DSTest {
     Vm vm = Vm(address(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D));
     Ethernaut ethernaut;
 
@@ -17,32 +18,23 @@ contract CoinFlipTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testCoinFlipHack() public {
+    function testTokenHack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
 
-        CoinFlipFactory coinFlipFactory = new CoinFlipFactory();
-        ethernaut.registerLevel(coinFlipFactory);
+        TokenFactory tokenFactory = new TokenFactory();
+        ethernaut.registerLevel(tokenFactory);
         vm.startPrank(tx.origin);
-        address levelAddress = ethernaut.createLevelInstance(coinFlipFactory);
-        CoinFlip coinFlip = CoinFlip(payable(levelAddress));
+        address levelAddress = ethernaut.createLevelInstance(tokenFactory);
 
         //////////////////
         // LEVEL ATTACK //
         //////////////////
 
-        CoinFlipHack coinFlipHack = new CoinFlipHack();
-
-        // Move the block from 0 to 5 to prevent underflow errors
-        uint256 starting_block = 5;
-        vm.roll(starting_block);
-
-        for (uint i = 0; i <= 10; i++) {
-            vm.roll(starting_block + i);
-            coinFlipHack.attack(address(coinFlip));
-        }
-
+        TokenHack tokenHack = new TokenHack(levelAddress);
+        tokenHack.attack();
+        
         //////////////////////
         // LEVEL SUBMISSION //
         //////////////////////
