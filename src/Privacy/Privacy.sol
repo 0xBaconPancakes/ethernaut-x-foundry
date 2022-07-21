@@ -8,10 +8,10 @@ contract Privacy {
   uint256 public ID = block.timestamp;
   uint8 private flattening = 10;
   uint8 private denomination = 255;
-  uint16 private awkwardness = uint16(block.timestamp); // now is deprecated use block.timestamp instead
+  uint16 private awkwardness = uint16(block.timestamp); // now is deprecated, using block.timestamp instead
   bytes32[3] private data;
 
-  constructor(bytes32[3] memory _data) public {
+  constructor(bytes32[3] memory _data) {
     data = _data;
   }
   
