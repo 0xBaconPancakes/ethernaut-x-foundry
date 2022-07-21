@@ -3,13 +3,13 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../Reentrance/Reentrance.sol";
-import "../Reentrance/ReentranceHack.sol";
-import "../Reentrance/ReentranceFactory.sol";
+import "../Elevator/Elevator.sol";
+import "../Elevator/ElevatorHack.sol";
+import "../Elevator/ElevatorFactory.sol";
 import "../Ethernaut.sol";
 import "./utils/vm.sol";
 
-contract ReentranceTest is DSTest {
+contract ElevatorTest is DSTest {
     Vm vm = Vm(address(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D));
     Ethernaut ethernaut;
 
@@ -18,23 +18,22 @@ contract ReentranceTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testReentranceHack() public {
+    function testElevatorHack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
 
-        ReentranceFactory reentranceFactory = new ReentranceFactory();
-        ethernaut.registerLevel(reentranceFactory);
+        ElevatorFactory elevatorFactory = new ElevatorFactory();
+        ethernaut.registerLevel(elevatorFactory);
         vm.startPrank(tx.origin);
-        address levelAddress = ethernaut.createLevelInstance{value: 1 ether}(reentranceFactory);
+        address levelAddress = ethernaut.createLevelInstance{value: 1 ether}(elevatorFactory);
 
         //////////////////
         // LEVEL ATTACK //
         //////////////////
 
-        ReentranceHack reentranceHack = new ReentranceHack(payable(levelAddress));
-        reentranceHack.causeOverflow{value: 2 ether}();
-        reentranceHack.deplete();
+        ElevatorHack elevatorHack = new ElevatorHack(levelAddress);
+        elevatorHack.attack();
         
         //////////////////////
         // LEVEL SUBMISSION //
