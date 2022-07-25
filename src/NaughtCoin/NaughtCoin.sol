@@ -12,9 +12,7 @@ import 'openzeppelin-contracts/contracts/token/ERC20/ERC20.sol';
   uint256 public INITIAL_SUPPLY;
   address public player;
 
-  constructor(address _player) 
-  ERC20('NaughtCoin', '0x0')
-  public {
+  constructor(address _player) ERC20('NaughtCoin', '0x0') {
     player = _player;
     INITIAL_SUPPLY = 1000000 * (10**uint256(decimals()));
     // _totalSupply = INITIAL_SUPPLY;
@@ -24,7 +22,7 @@ import 'openzeppelin-contracts/contracts/token/ERC20/ERC20.sol';
   }
   
   function transfer(address _to, uint256 _value) override public lockTokens returns(bool) {
-    super.transfer(_to, _value);
+    return super.transfer(_to, _value);
   }
 
   // Prevent the initial owner from transferring tokens until the timelock has passed
