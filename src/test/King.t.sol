@@ -4,7 +4,7 @@ pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
 import "../King/King.sol";
-import "../King/KingHack.sol";
+import "../King/KingAttack.sol";
 import "../King/KingFactory.sol";
 import "../Ethernaut.sol";
 import "./utils/vm.sol";
@@ -18,7 +18,7 @@ contract KingTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testKingHack() public {
+    function testKingAttack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
@@ -33,9 +33,9 @@ contract KingTest is DSTest {
         // LEVEL ATTACK //
         //////////////////
 
-        KingHack kingHack = new KingHack();
+        KingAttack kingAttack = new KingAttack();
         uint256 higherPrize = king.prize() + 1;
-        kingHack.becomeKing{value: higherPrize}(address(king));
+        kingAttack.becomeKing{value: higherPrize}(address(king));
         
         //////////////////////
         // LEVEL SUBMISSION //

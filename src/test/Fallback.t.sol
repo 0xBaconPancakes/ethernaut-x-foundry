@@ -19,7 +19,7 @@ contract FallbackTest is DSTest {
         vm.deal(eoaAddress, 5 ether);
     }
 
-    function testFallbackHack() public {
+    function testFallbackAttack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////

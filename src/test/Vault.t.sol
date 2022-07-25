@@ -17,7 +17,7 @@ contract VaultTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testVaultHack() public {
+    function testVaultAttack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////

@@ -17,7 +17,7 @@ contract ForceTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testForceHack() public {
+    function testForceAttack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////

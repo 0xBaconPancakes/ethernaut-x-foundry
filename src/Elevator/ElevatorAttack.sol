@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 import "./Elevator.sol";
 
-contract ElevatorHack is Building {
+contract ElevatorAttack is Building {
     Elevator public elevator;
     bool public lastFloorFlag = true;
     

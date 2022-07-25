@@ -3,7 +3,7 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../CoinFlip/CoinFlipHack.sol";
+import "../CoinFlip/CoinFlipAttack.sol";
 import "../CoinFlip/CoinFlipFactory.sol";
 import "../Ethernaut.sol";
 import "./utils/vm.sol";
@@ -17,7 +17,7 @@ contract CoinFlipTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testCoinFlipHack() public {
+    function testCoinFlipAttack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
@@ -32,7 +32,7 @@ contract CoinFlipTest is DSTest {
         // LEVEL ATTACK //
         //////////////////
 
-        CoinFlipHack coinFlipHack = new CoinFlipHack();
+        CoinFlipAttack coinFlipAttack = new CoinFlipAttack();
 
         // Move the block from 0 to 5 to prevent underflow errors
         uint256 starting_block = 5;
@@ -40,7 +40,7 @@ contract CoinFlipTest is DSTest {
 
         for (uint i = 0; i <= 10; i++) {
             vm.roll(starting_block + i);
-            coinFlipHack.attack(address(coinFlip));
+            coinFlipAttack.attack(address(coinFlip));
         }
 
         //////////////////////

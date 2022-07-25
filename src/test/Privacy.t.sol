@@ -17,7 +17,7 @@ contract PrivacyTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testPrivacyHack() public {
+    function testPrivacyAttack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////

@@ -4,7 +4,7 @@ pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
 import "../Telephone/Telephone.sol";
-import "../Telephone/TelephoneHack.sol";
+import "../Telephone/TelephoneAttack.sol";
 import "../Telephone/TelephoneFactory.sol";
 import "../Ethernaut.sol";
 import "./utils/vm.sol";
@@ -18,7 +18,7 @@ contract TelephoneTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testTelephoneHack() public {
+    function testTelephoneAttack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
@@ -32,8 +32,8 @@ contract TelephoneTest is DSTest {
         // LEVEL ATTACK //
         //////////////////
 
-        TelephoneHack telephoneHack = new TelephoneHack(levelAddress);
-        telephoneHack.attack();
+        TelephoneAttack telephoneAttack = new TelephoneAttack(levelAddress);
+        telephoneAttack.attack();
         
         //////////////////////
         // LEVEL SUBMISSION //

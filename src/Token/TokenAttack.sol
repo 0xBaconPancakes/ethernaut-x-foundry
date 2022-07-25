@@ -8,7 +8,7 @@ interface IToken {
     function balanceOf(address _owner) external view returns (uint balance);
 }
 
-contract TokenHack {
+contract TokenAttack {
     IToken public challenge;
 
     constructor(address challengeAddress) {

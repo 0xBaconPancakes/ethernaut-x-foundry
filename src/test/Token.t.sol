@@ -4,7 +4,7 @@ pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
 import "../Token/Token.sol";
-import "../Token/TokenHack.sol";
+import "../Token/TokenAttack.sol";
 import "../Token/TokenFactory.sol";
 import "../Ethernaut.sol";
 import "./utils/vm.sol";
@@ -18,7 +18,7 @@ contract TokenTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testTokenHack() public {
+    function testTokenAttack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
@@ -32,8 +32,8 @@ contract TokenTest is DSTest {
         // LEVEL ATTACK //
         //////////////////
 
-        TokenHack tokenHack = new TokenHack(levelAddress);
-        tokenHack.attack();
+        TokenAttack tokenAttack = new TokenAttack(levelAddress);
+        tokenAttack.attack();
         
         //////////////////////
         // LEVEL SUBMISSION //

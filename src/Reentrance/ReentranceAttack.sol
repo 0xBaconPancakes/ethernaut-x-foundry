@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 import "./Reentrance.sol";
 
-contract ReentranceHack {
+contract ReentranceAttack {
     Reentrance target;
     address payable private _owner;
     uint256 private _amount;

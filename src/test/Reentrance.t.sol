@@ -4,7 +4,7 @@ pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
 import "../Reentrance/Reentrance.sol";
-import "../Reentrance/ReentranceHack.sol";
+import "../Reentrance/ReentranceAttack.sol";
 import "../Reentrance/ReentranceFactory.sol";
 import "../Ethernaut.sol";
 import "./utils/vm.sol";
@@ -18,7 +18,7 @@ contract ReentranceTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testReentranceHack() public {
+    function testReentranceAttack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
@@ -32,9 +32,9 @@ contract ReentranceTest is DSTest {
         // LEVEL ATTACK //
         //////////////////
 
-        ReentranceHack reentranceHack = new ReentranceHack(payable(levelAddress));
-        reentranceHack.causeOverflow{value: 2 ether}();
-        reentranceHack.deplete();
+        ReentranceAttack reentranceAttack = new ReentranceAttack(payable(levelAddress));
+        reentranceAttack.causeOverflow{value: 2 ether}();
+        reentranceAttack.deplete();
         
         //////////////////////
         // LEVEL SUBMISSION //

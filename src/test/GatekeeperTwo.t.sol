@@ -3,7 +3,7 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../GatekeeperTwo/GatekeeperTwoHack.sol";
+import "../GatekeeperTwo/GatekeeperTwoAttack.sol";
 import "../GatekeeperTwo/GatekeeperTwoFactory.sol";
 import "../Ethernaut.sol";
 import "./utils/vm.sol";
@@ -17,7 +17,7 @@ contract GatekeeperTwoTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testGatekeeperTwoHack() public {
+    function testGatekeeperTwoAttack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
@@ -32,7 +32,7 @@ contract GatekeeperTwoTest is DSTest {
         // LEVEL ATTACK //
         //////////////////
 
-        new GatekeeperTwoHack(levelAddress);
+        new GatekeeperTwoAttack(levelAddress);
 
         //////////////////////
         // LEVEL SUBMISSION //

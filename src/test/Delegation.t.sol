@@ -17,7 +17,7 @@ contract DelegationTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testDelegationHack() public {
+    function testDelegationAttack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////

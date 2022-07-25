@@ -6,7 +6,7 @@ interface ITelephone {
     function changeOwner(address _owner) external;
 }
 
-contract TelephoneHack {
+contract TelephoneAttack {
     ITelephone public challenge;
 
     constructor(address challengeAddress) {
