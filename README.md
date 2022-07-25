@@ -2,6 +2,8 @@
 
 ## Ethernaut puzzles solved & tested with foundry.
 
+This is my own fork of the original [ethernaut-x-foundry repo](https://github.com/ciaranmcveigh5/ethernaut-x-foundry) with my own solutions.
+
 **Ethernaut**
 
 https://ethernaut.openzeppelin.com/
@@ -78,6 +80,9 @@ Eg [Fallback test are located in ./src/test/Fallback.t.sol](src/test/Fallback.t.
 | [25. Motorbike](src/Motorbike) |
 
 ## References
+
+@ciaranmcveigh5 for his foundry x ethernaut repo
+https://github.com/ciaranmcveigh5/ethernaut-x-foundry
 
 @cmichelio for his hardhat x ethernaut repo
 https://github.com/MrToph/ethernaut
