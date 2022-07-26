@@ -35,11 +35,12 @@ contract FallbackTest is DSTest {
         //////////////////
 
         // Pay a small contribution
-        ethernautFallback.contribute{value: 1 wei}();
+        ethernautFallback.contribute{value : 1 wei}();
         assertEq(ethernautFallback.getContribution(), 1 wei, "Contribution failed.");
 
         // Make me the owner
-        payable(address(ethernautFallback)).call{value: 1}("");
+        (bool result,) = payable(address(ethernautFallback)).call{value : 1}("");
+        require(result);
         assertEq(ethernautFallback.owner(), eoaAddress, "Setting owner failed.");
 
         emit log_named_uint("Fallback contract balance before attack", address(ethernautFallback).balance);

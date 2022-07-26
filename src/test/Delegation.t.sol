@@ -33,8 +33,9 @@ contract DelegationTest is DSTest {
         //////////////////
 
         bytes4 signature = bytes4(keccak256("pwn()"));
-        address(delegation).call(abi.encode(signature));
-        
+        (bool result,) = address(delegation).call(abi.encode(signature));
+        require(result);
+
         //////////////////////
         // LEVEL SUBMISSION //
         //////////////////////
