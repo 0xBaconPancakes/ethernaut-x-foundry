@@ -9,9 +9,9 @@ contract Dex  {
   using SafeMath for uint;
   address public token1;
   address public token2;
-  constructor(address _token1, address _token2) public {
-    token1 = _token1;
-    token2 = _token2;
+  constructor(address _token1, address _token2) {
+      token1 = _token1;
+      token2 = _token2;
   }
 
   function swap(address from, address to, uint amount) public {
