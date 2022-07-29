@@ -26,6 +26,7 @@ contract DSTest {
     event log_bytes              (bytes);
     event log_string             (string);
 
+    event log_named_bool         (string key, bool val);
     event log_named_address      (string key, address val);
     event log_named_bytes32      (string key, bytes32 val);
     event log_named_decimal_int  (string key, int val, uint decimals);
