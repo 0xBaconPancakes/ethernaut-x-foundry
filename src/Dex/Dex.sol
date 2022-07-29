@@ -53,6 +53,7 @@ contract SwappableToken is ERC20 {
 
   function approve(address owner, address spender, uint256 amount) public returns (bool){
     require(owner != _dex, "InvalidApprover");
-    return super._approve(owner, spender, amount);
+    super._approve(owner, spender, amount);
+    return true;
   }
 }

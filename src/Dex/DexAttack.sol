@@ -48,7 +48,7 @@ contract DexAttack {
     function getSwapAmount(
         address from,
         address to
-    ) public returns (uint256) {
+    ) public view returns (uint256) {
 
         return min(
             IERC20(from).balanceOf(address(this)),
