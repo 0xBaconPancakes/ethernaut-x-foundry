@@ -29,7 +29,6 @@ contract RecoveryTest is DSTest {
         ethernaut.registerLevel(recoveryFactory);
         vm.startPrank(eoaAddress);
         address levelAddress = ethernaut.createLevelInstance{value : 0.001 ether}(recoveryFactory);
-        // Recovery ethernautRecovery = Recovery(payable(levelAddress));
 
         //////////////////
         // LEVEL ATTACK //

@@ -28,7 +28,7 @@ contract MagicNumTest is DSTest {
         ethernaut.registerLevel(magicNumFactory);
         vm.startPrank(eoaAddress);
         address levelAddress = ethernaut.createLevelInstance{value : 0.001 ether}(magicNumFactory);
-        MagicNum ethernautMagicNum = MagicNum(payable(levelAddress));
+        MagicNum magicNum = MagicNum(payable(levelAddress));
 
         //////////////////
         // LEVEL ATTACK //
@@ -42,7 +42,7 @@ contract MagicNumTest is DSTest {
         assembly {
             addr := create(0, add(code, 0x20), mload(code))
         }
-        ethernautMagicNum.setSolver(addr);
+        magicNum.setSolver(addr);
 
         //////////////////////
         // LEVEL SUBMISSION //

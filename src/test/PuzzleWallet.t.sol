@@ -4,13 +4,11 @@ pragma solidity ^0.8.10;
 import "ds-test/test.sol";
 import "../PuzzleWallet/PuzzleWallet.sol";
 import "../PuzzleWallet/PuzzleWalletFactory.sol";
-import "../PuzzleWallet/bytes/Bytes.sol";
 import "openzeppelin-contracts/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol";
 import "../Ethernaut.sol";
 import "./utils/vm.sol";
 
 contract PuzzleWalletTest is DSTest {
-    using Bytes for bytes;
 
     Vm vm = Vm(address(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D));
     Ethernaut ethernaut;
